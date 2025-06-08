@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Next-Generation Digital Solutions</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="code-element code-1">&lt;/&gt;</div>
+    <div class="code-element code-2">{...}</div>
+    <div class="code-element code-3">&lt;code&gt;</div>
+
+    <div class="container">
+        <div class="transformation-icon">🤖</div>
+        <h1>Something Revolutionary Is Coming</h1>
+        
+        <p class="subtitle">
+            We're building the future of digital innovation.<br>
+            Powered by AI. Driven by expertise.
+        </p>
+        
+        <div class="feature-grid">
+            <div class="feature-item">
+                <div class="feature-icon">🤖</div>
+                <div class="feature-text">AI Solutions</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">💡</div>
+                <div class="feature-text">Digital Consultation</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📱</div>
+                <div class="feature-text">Mobile Development</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-text">Web Solutions</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎨</div>
+                <div class="feature-text">UI/UX Design</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-text">Digital Strategy</div>
+            </div>
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+        
+        <form action="https://api.web3forms.com/submit" method="POST" class="email-form" id="notifyForm">
+            <!-- Replace with your Access Key from Web3Forms -->
+            <input type="hidden" name="access_key" value="b5edf9dc-da45-4e71-af58-382caf42d8b5">
+            
+            <!-- Subject line for the email you'll receive -->
+            <input type="hidden" name="subject" value="New subscriber from Yoginify Coming Soon page">
+            
+            <!-- Optional: Custom success message -->
+            <input type="hidden" name="from_name" value="Yoginify Website">
+            
+            <input 
+                type="email" 
+                name="email"
+                class="email-input" 
+                id="emailInput"
+                placeholder="Enter your email for updates"
+                required
+            >
+            
+            <!-- Honeypot Spam Protection -->
+            <input type="checkbox" name="botcheck" style="display: none;">
+            
+            <!-- Optional: Redirect to a thank you page after submission -->
+            <!-- <input type="hidden" name="redirect" value="https://yoginify.com/thank-you"> -->
+            
+            <button type="submit" class="submit-btn">Get Notified</button>
+        </form>
+        
+        <!-- Success/Error Notification -->
+        <div id="notification" class="notification"></div>
+        
+        <p class="info-text">
+            Where AI meets innovation. Your next-generation digital partner.
+        </p>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; <span id="currentYear"></span> Yoginify AB. All rights reserved.</p>
+            <!--<div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <span class="separator">•</span>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <span class="separator">•</span>
+                <a href="mailto:info@yoginify.com" class="footer-link">Contact</a>
+            </div> -->
+        </div>
+    </footer>
+
+    <script>
+        // Set current year
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Notification function
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            
+            // Show notification
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 5000);
+        }
+        
+        // Enhanced form handler for Web3Forms
+        document.getElementById('notifyForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const form = e.target;
+            const button = form.querySelector('.submit-btn');
+            const email = form.querySelector('#emailInput').value;
+            
+            // Disable button and show loading state
+            button.disabled = true;
+            button.textContent = 'Sending...';
+            
+            try {
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: new FormData(form)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Success notification
+                    showNotification(`🎉 Thank you! We'll notify ${email} when we launch.`, 'success');
+                    form.reset();
+                } else {
+                    throw new Error('Submission failed');
+                }
+                
+            } catch (error) {
+                // Error notification
+                showNotification('❌ Oops! Something went wrong. Please try again.', 'error');
+                console.error('Error:', error);
+            } finally {
+                // Reset button state
+                button.disabled = false;
+                button.textContent = 'Get Notified';
+            }
+        });
+    </script>
+</body>
+</html>
